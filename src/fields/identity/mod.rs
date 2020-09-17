@@ -1,7 +1,7 @@
 mod parsers;
 mod structs;
 
-pub(crate) use parsers::*;
+pub use parsers::*;
 pub use structs::*;
 
 #[cfg(test)]

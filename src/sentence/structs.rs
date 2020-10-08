@@ -1,3 +1,5 @@
+use arrayvec::ArrayString;
+
 use crate::fields::identity::*;
 use crate::fields::parameter::*;
 use crate::messages::*;
@@ -31,24 +33,4 @@ pub enum Message<'a> {
     ZDA(ZDAMessage),
 }
 
-#[derive(Debug, PartialEq)]
-pub(crate) enum MessageType {
-    DTM,
-    GBQ,
-    GBS,
-    GGA,
-    GLL,
-    GLQ,
-    GNQ,
-    GNS,
-    GPQ,
-    GRS,
-    GSA,
-    GST,
-    GSV,
-    RMC,
-    TXT,
-    VLW,
-    VTG,
-    ZDA,
-}
+pub type MessageType = ArrayString<[u8; 3]>;

@@ -1,4 +1,3 @@
-use crate::fields::cardinality::*;
 use crate::fields::distance::*;
 use crate::fields::parameter::*;
 use crate::fields::time::*;
@@ -11,12 +10,8 @@ use nom::IResult;
 pub struct GLLMessage {
     /// Latitude
     pub lat: Option<Degree>,
-    /// North/South indicator
-    pub ns: NorthSouth,
     /// Longitude
     pub lon: Option<Degree>,
-    /// East/West indicator
-    pub ew: EastWest,
     /// UTC time
     pub time: Option<NaiveTime>,
     /// Data validity status
@@ -26,11 +21,9 @@ pub struct GLLMessage {
 }
 
 pub fn parse_gll(input: &str) -> IResult<&str, GLLMessage> {
-    let (remaining, (lat, ns, lon, ew, time, status, pos_mode)) = tuple((
-        parse_degree,
-        parse_north_south_indicator,
-        parse_degree,
-        parse_east_west_indicator,
+    let (remaining, (lat, lon, time, status, pos_mode)) = tuple((
+        parse_latitude,
+        parse_longitude,
         parse_time,
         parse_status,
         parse_pos_mode,
@@ -39,9 +32,7 @@ pub fn parse_gll(input: &str) -> IResult<&str, GLLMessage> {
         remaining,
         GLLMessage {
             lat,
-            ns,
             lon,
-            ew,
             time,
             status,
             pos_mode,
@@ -59,10 +50,8 @@ mod tests {
         let expected = Ok((
             "",
             GLLMessage {
-                lat: Some(Degree(47.171136399999995)), // floats ¯\_(ツ)_/¯
-                ns: NorthSouth::North,
-                lon: Some(Degree(8.3391565)),
-                ew: EastWest::East,
+                lat: Some(Degree(47.285227333333324)), // floats ¯\_(ツ)_/¯
+                lon: Some(Degree(8.565260833333333)),
                 time: Some(NaiveTime::from_hms(9, 23, 21)),
                 status: Status::DataValid,
                 pos_mode: Fix::AutonomousGNSSFix,

@@ -1,4 +1,3 @@
-use crate::fields::cardinality::*;
 use crate::fields::distance::*;
 use crate::fields::identity::*;
 use crate::fields::parameter::*;
@@ -14,12 +13,8 @@ pub struct GGAMessage {
     pub time: Option<NaiveTime>,
     /// Latitude
     pub lat: Option<Degree>,
-    /// North/South indicator
-    pub ns: NorthSouth,
     /// Longitude
     pub lon: Option<Degree>,
-    /// East/West indicator
-    pub ew: EastWest,
     /// Quality indicator for position fix
     pub quality: Fix,
     /// Number of satellites used
@@ -39,13 +34,11 @@ pub struct GGAMessage {
 pub fn parse_gga(input: &str) -> IResult<&str, GGAMessage> {
     let (
         remaining,
-        (time, lat, ns, lon, ew, quality, num_sv, hdop, alt, _, sep, _, diff_age, diff_station),
+        (time, lat, lon, quality, num_sv, hdop, alt, _, sep, _, diff_age, diff_station),
     ) = tuple((
         parse_time,
-        parse_degree,
-        parse_north_south_indicator,
-        parse_degree,
-        parse_east_west_indicator,
+        parse_latitude,
+        parse_longitude,
         parse_quality,
         parse_num_satellites,
         parse_dilution_of_precision,
@@ -61,9 +54,7 @@ pub fn parse_gga(input: &str) -> IResult<&str, GGAMessage> {
         GGAMessage {
             time,
             lat,
-            ns,
             lon,
-            ew,
             quality,
             num_sv,
             hdop,
@@ -86,10 +77,8 @@ mod tests {
             "",
             GGAMessage {
                 time: Some(NaiveTime::from_hms_milli(09, 27, 25, 00)),
-                lat: Some(Degree(47.1711399)),
-                ns: NorthSouth::North,
-                lon: Some(Degree(8.3391590)),
-                ew: EastWest::East,
+                lat: Some(Degree(47.285233166666664)),
+                lon: Some(Degree(8.565265)),
                 quality: Fix::AutonomousGNSSFix,
                 num_sv: Some(8),
                 hdop: Some(1.01),

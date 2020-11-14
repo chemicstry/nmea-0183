@@ -16,12 +16,8 @@ pub struct RMCMessage {
     pub status: Status,
     /// Latitude
     pub lat: Option<Degree>,
-    /// North/South indicator
-    pub ns: NorthSouth,
     /// Longitude
     pub lon: Option<Degree>,
-    /// East/West indicator
-    pub ew: EastWest,
     /// Speed over ground
     pub spd: Option<Knot>,
     /// Course over ground
@@ -38,33 +34,27 @@ pub struct RMCMessage {
 }
 
 pub fn parse_rmc(input: &str) -> IResult<&str, RMCMessage> {
-    let (
-        remaining,
-        (time, status, lat, ns, lon, ew, spd, cog, date, mv, mv_ew, pos_mode, nav_status),
-    ) = tuple((
-        parse_time,
-        parse_status,
-        parse_degree,
-        parse_north_south_indicator,
-        parse_degree,
-        parse_east_west_indicator,
-        parse_knot,
-        parse_raw_degree,
-        parse_date,
-        parse_degree,
-        parse_maybe_east_west_indicator,
-        parse_pos_mode,
-        parse_navigational_status,
-    ))(input)?;
+    let (remaining, (time, status, lat, lon, spd, cog, date, mv, mv_ew, pos_mode, nav_status)) =
+        tuple((
+            parse_time,
+            parse_status,
+            parse_latitude,
+            parse_longitude,
+            parse_knot,
+            parse_raw_degree,
+            parse_date,
+            parse_degree,
+            parse_maybe_east_west_indicator,
+            parse_pos_mode,
+            parse_navigational_status,
+        ))(input)?;
     Ok((
         remaining,
         RMCMessage {
             time,
             status,
             lat,
-            ns,
             lon,
-            ew,
             spd,
             cog,
             date,
@@ -88,10 +78,8 @@ mod tests {
             RMCMessage {
                 time: NaiveTime::from_hms_opt(8, 35, 59),
                 status: Status::DataValid,
-                lat: Some(Degree(47.1711437)),
-                ns: NorthSouth::North,
-                lon: Some(Degree(8.3391522)),
-                ew: EastWest::East,
+                lat: Some(Degree(47.2852395)),
+                lon: Some(Degree(8.565253666666665)),
                 spd: Some(Knot(0.004)),
                 cog: Some(Degree(77.52)),
                 date: NaiveDate::from_ymd_opt(2002, 12, 09),

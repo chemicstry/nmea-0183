@@ -101,10 +101,8 @@ mod sentence_tests {
             talker: Talker::GPS,
             message: Message::GGA(GGAMessage {
                 time: Some(NaiveTime::from_hms_milli(09, 27, 25, 00)),
-                lat: Some(Degree(47.1711399)),
-                ns: NorthSouth::North,
-                lon: Some(Degree(8.3391590)),
-                ew: EastWest::East,
+                lat: Some(Degree(47.285233166666664)),
+                lon: Some(Degree(8.565265)),
                 quality: Fix::AutonomousGNSSFix,
                 num_sv: Some(8),
                 hdop: Some(1.01),
@@ -202,10 +200,8 @@ mod sentence_tests {
             sentence_type: SentenceType::Parametric,
             talker: Talker::GPS,
             message: Message::GLL(GLLMessage {
-                lat: Some(Degree(47.171136399999995)), // floats ¯\_(ツ)_/¯
-                ns: NorthSouth::North,
-                lon: Some(Degree(8.3391565)),
-                ew: EastWest::East,
+                lat: Some(Degree(47.285227333333324)), // floats ¯\_(ツ)_/¯
+                lon: Some(Degree(8.565260833333333)),
                 time: Some(NaiveTime::from_hms(9, 23, 21)),
                 status: Status::DataValid,
                 pos_mode: Fix::AutonomousGNSSFix,
@@ -245,10 +241,8 @@ mod sentence_tests {
             message: Message::RMC(RMCMessage {
                 time: NaiveTime::from_hms_opt(8, 35, 59),
                 status: Status::DataValid,
-                lat: Some(Degree(47.1711437)),
-                ns: NorthSouth::North,
-                lon: Some(Degree(8.3391522)),
-                ew: EastWest::East,
+                lat: Some(Degree(47.2852395)),
+                lon: Some(Degree(8.565253666666665)),
                 spd: Some(Knot(0.004)),
                 cog: Some(Degree(77.52)),
                 date: NaiveDate::from_ymd_opt(2002, 12, 09),
@@ -335,10 +329,8 @@ mod sentence_tests {
             talker: Talker::GPSGLONASS,
             message: Message::GNS(GNSMessage {
                 time: Some(NaiveTime::from_hms_milli(10, 36, 00, 10)),
-                lat: Some(Degree(51.145117600000006)), // floats ¯\_(ツ)_/¯
-                ns: Some(NorthSouth::North),
-                lon: Some(Degree(0.12293799999999999)), // floats ¯\_(ツ)_/¯
-                ew: Some(EastWest::West),
+                lat: Some(Degree(51.24186266666668)), // floats ¯\_(ツ)_/¯
+                lon: Some(Degree(-0.20489666666666664)), // floats ¯\_(ツ)_/¯
                 pos_mode: FixList::from([
                     Fix::AutonomousGNSSFix,
                     Fix::NoFix,

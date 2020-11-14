@@ -1,6 +1,6 @@
-pub(crate) mod parser;
+mod parser;
 mod structs;
-pub(crate) use parser::*;
+pub use parser::*;
 pub use structs::*;
 
 #[cfg(test)]

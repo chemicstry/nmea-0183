@@ -2,6 +2,7 @@ use super::structs::*;
 use crate::fields::distance::parse_raw_degree;
 use crate::fields::parameter::parse_dbhz;
 use crate::parser_utils::*;
+use arrayvec::ArrayString;
 use nom::sequence::tuple;
 use nom::IResult;
 
@@ -84,7 +85,7 @@ pub fn parse_talker(input: &str) -> IResult<&str, Talker> {
         "ZC" => Ok((remaining, Talker::TimekeeperChronometer)),
         "ZQ" => Ok((remaining, Talker::TimekeeperQuartz)),
         "ZV" => Ok((remaining, Talker::TimekeeperRadioUpdate)),
-        _ => Err(nom::Err::Failure((input, nom::error::ErrorKind::OneOf))),
+        other => Ok((remaining, Talker::Unknown(ArrayString::from(other).unwrap()))),
     }
 }
 

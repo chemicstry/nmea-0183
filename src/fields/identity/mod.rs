@@ -16,16 +16,9 @@ mod talker_tests {
     }
 
     #[test]
-    fn test_parse_wrong_parse_talker() {
-        let input = "thisisnotatalker";
-        let expected_output = Err(nom::Err::Failure((input, nom::error::ErrorKind::OneOf)));
-        assert_eq!(expected_output, parse_talker(input));
-    }
-
-    #[test]
-    fn test_parse_not_enough_characters() {
-        let input = "*foo bar";
-        let expected_output = Err(nom::Err::Failure((input, nom::error::ErrorKind::OneOf)));
+    fn test_parse_unknown_talker() {
+        let input = "PAtest";
+        let expected_output = Ok(("test", Talker::Unknown(TalkerId::from("PA").unwrap())));
         assert_eq!(expected_output, parse_talker(input));
     }
 

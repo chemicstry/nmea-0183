@@ -1,4 +1,5 @@
 use arrayvec::ArrayVec;
+use arrayvec::ArrayString;
 
 use crate::fields::distance::Degree;
 use crate::fields::parameter::DBHZ;
@@ -144,7 +145,11 @@ pub enum Talker {
     TimekeeperQuartz,
     /// Timekeeper - Radio Update, WWV or WWVH
     TimekeeperRadioUpdate,
+    /// Unknown
+    Unknown(TalkerId),
 }
+
+pub type TalkerId = ArrayString<[u8; 2]>;
 
 #[derive(Debug, PartialEq)]
 /// Represents a Satellite
